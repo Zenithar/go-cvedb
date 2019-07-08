@@ -1,0 +1,29 @@
+before:
+  hooks:
+    - go mod download
+builds:
+  -
+    goos: [linux, darwin, windows]
+    goarch: [386, amd64, arm, arm64]
+archives:
+  - wrap_in_directory: true
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ .Tag }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+    - '^doc:'
+    - '^test:'
+brew:
+  name: cvedb
+  github:
+    owner: zenithar
+    name: Thibault NORMAND
+  commit_author:
+    name: Thibault NORMAND
+    email: "me@zenithar.org"
+  homepage: https://go.zenithar.org/cvedb
+  description: "MITRE CVE Database"
