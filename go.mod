@@ -12,6 +12,6 @@ require (
 	github.com/stretchr/testify v1.3.0
 	go.zenithar.org/pkg/db v0.0.2
 	go.zenithar.org/pkg/db/adapter/mongodb v0.0.2
-	golang.org/x/xerrors v0.0.0-20190410155217-1f06c39b4373
+	golang.org/x/xerrors v0.0.0-20190713072444-3ee3066db522
 	gopkg.in/h2non/gock.v1 v1.0.15
 )
