@@ -1,3 +1,19 @@
+/*
+ * Copyright 2019 Thibault NORMAND
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package nvd_test
 
 import (
@@ -5,7 +21,6 @@ import (
 
 	"go.zenithar.org/cvedb/pkg/feeds/nvd"
 
-	"github.com/davecgh/go-spew/spew"
 	"github.com/stretchr/testify/assert"
 	"gopkg.in/h2non/gock.v1"
 )
@@ -27,8 +42,6 @@ func TestRecent(t *testing.T) {
 	// Check data
 	assert.Equal(t, "20945F14B67740DF80575D5747593234F63F9349AAFC58A8BEDE3CFCEFA8A8A9", h, "Hash should be as expected")
 	assert.Equal(t, 4, len(data.CVEItems), "CVE Bundle should contains expected CVE count")
-
-	spew.Dump(data)
 }
 
 func TestModified(t *testing.T) {

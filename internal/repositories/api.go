@@ -14,9 +14,17 @@
  * limitations under the License.
  */
 
-package models
+package repositories
 
-// CVEDetails represents Mitre CVE details
-type CVEDetails struct {
-	ID string `json:"id" bson:"id"`
+import (
+	"context"
+
+	"go.zenithar.org/cvedb/internal/models"
+)
+
+// Advisory describves advisory management contract
+type Advisory interface {
+	Create(ctx context.Context, entity *models.Advisory) error
+	Get(ctx context.Context, id string) (*models.Advisory, error)
+	Update(ctx context.Context, entity *models.Advisory) error
 }

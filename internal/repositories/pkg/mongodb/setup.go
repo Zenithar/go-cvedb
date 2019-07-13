@@ -14,9 +14,25 @@
  * limitations under the License.
  */
 
-package models
+package mongodb
 
-// CVEDetails represents Mitre CVE details
-type CVEDetails struct {
-	ID string `json:"id" bson:"id"`
-}
+import (
+	"github.com/google/wire"
+
+	db "go.zenithar.org/pkg/db/adapter/mongodb"
+)
+
+// ----------------------------------------------------------
+
+var (
+	// AdvisoryTableName represents advisory collection name
+	AdvisoryTableName = "advisories"
+)
+
+// ----------------------------------------------------------
+
+// RepositorySet exposes Google Wire providers
+var RepositorySet = wire.NewSet(
+	db.Connection,
+	Advisories,
+)
