@@ -47,7 +47,7 @@ require (
 	github.com/stretchr/testify v1.3.0
 	github.com/syndtr/goleveldb v1.0.0 // indirect
 	github.com/tecbot/gorocksdb v0.0.0-20190705090504-162552197222 // indirect
-	go.mongodb.org/mongo-driver v1.0.1-0.20190712184055-9ec4480161a7
+	go.mongodb.org/mongo-driver v1.0.4
 	go.opencensus.io v0.22.0
 	go.uber.org/zap v1.10.0
 	go.zenithar.org/pkg/config v0.0.3
