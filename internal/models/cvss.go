@@ -16,7 +16,20 @@
 
 package models
 
-// CVEDetails represents Mitre CVE details
-type CVEDetails struct {
-	ID string `json:"id" bson:"id"`
+// Cvss holds CVSS score component.
+type Cvss struct {
+	V2 *CvssV2 `json:"v2,omitempty" bson:"v2,omitempty"`
+	V3 *CvssV3 `json:"v3,omitempty" bson:"v3,omitempty"`
+}
+
+// CvssV2 components
+type CvssV2 struct {
+	Score        float64 `json:"score" bson:"score"`
+	VectorString string  `json:"vectorString" bson:"vectorString"`
+}
+
+// CvssV3 components
+type CvssV3 struct {
+	Score        float64 `json:"score" bson:"score"`
+	VectorString string  `json:"vectorString" bson:"vectorString"`
 }

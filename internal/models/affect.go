@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 
-package badger
+package models
 
-var (
-	// AdvisoryNamespace declares advisory prefix for K/V store
-	AdvisoryNamespace = "advisory"
-)
+// Affect holds advisory affectation.
+type Affect struct {
+	Vendor  string `json:"vendor" bson:"vendor"`
+	Product string `json:"product" bson:"product"`
+	Version string `json:"version" bson:"version"`
+}

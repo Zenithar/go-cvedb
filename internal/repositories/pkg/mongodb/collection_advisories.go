@@ -69,8 +69,7 @@ func (r *mgoAdvisoryRepository) Update(ctx context.Context, entity *models.Advis
 	return r.adapter.Update(ctx, map[string]interface{}{
 		"description": entity.Description,
 		"score":       entity.Score,
-		"severity":    entity.Severity,
 	}, map[string]interface{}{
-		"_id": entity.ID,
+		"id": entity.ID,
 	})
 }

@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
-package badger
+package models
 
-var (
-	// AdvisoryNamespace declares advisory prefix for K/V store
-	AdvisoryNamespace = "advisory"
-)
+// Reference holds advisory reference.
+type Reference struct {
+	Link   string   `json:"link" bson:"link"`
+	Source string   `json:"source" bson:"source"`
+	Name   string   `json:"name" bson:"name"`
+	Tags   []string `json:"tags" bson:"tags"`
+}

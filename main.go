@@ -16,5 +16,37 @@
 
 package main
 
+import (
+	"context"
+
+	"go.uber.org/zap"
+
+	"go.zenithar.org/cvedb/internal/repositories/pkg/mongodb"
+	"go.zenithar.org/cvedb/pkg/feeds/nvd"
+	mdb "go.zenithar.org/pkg/db/adapter/mongodb"
+	"go.zenithar.org/pkg/log"
+)
+
 func main() {
+	ctx := context.Background()
+
+	// Open mongo connection
+	cfg := &mdb.Configuration{
+		AutoMigrate:      false,
+		ConnectionString: "mongodb://localhost:27017",
+		DatabaseName:     "cvedb",
+	}
+
+	client, err := mdb.Connection(ctx, cfg)
+	if err != nil {
+		log.For(ctx).Fatal("Unable to connect to database", zap.Error(err))
+	}
+
+	// Advisory repository
+	advisories := mongodb.Advisories(cfg, client)
+
+	// Import NVD feeds
+	if err := nvd.Import(ctx, advisories); err != nil {
+		log.For(ctx).Fatal("Unable to import advisories", zap.Error(err))
+	}
 }

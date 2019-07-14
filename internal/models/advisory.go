@@ -18,26 +18,20 @@ package models
 
 import (
 	"time"
-
-	"github.com/dchest/uniuri"
 )
 
 // Advisory is the advisory information holder
 type Advisory struct {
-	ID string `json:"id" bson:"_id"`
-
-	Description      string    `json:"description" bson:"description"`
-	Score            float64   `json:"score" bson:"score"`
-	Severity         string    `json:"severity" bson:"severity"`
-	LastModifiedDate time.Time `json:"lastModifiedDate" bson:"lastModifiedDate"`
-	PublishedDate    time.Time `json:"publishedDate" bson:"publishedDate"`
-}
-
-// NewAdvisory returns a advisory model
-func NewAdvisory() *Advisory {
-	return &Advisory{
-		ID: uniuri.NewLen(32),
-	}
+	ID               string            `json:"id" bson:"id"`
+	Description      map[string]string `json:"description" bson:"description"`
+	Score            float64           `json:"score" bson:"score"`
+	LastModifiedDate time.Time         `json:"lastModifiedDate" bson:"lastModifiedDate"`
+	PublishedDate    time.Time         `json:"publishedDate" bson:"publishedDate"`
+	Cve              string            `json:"cve" bson:"cve"`
+	CVSS             Cvss              `json:"cvss" bson:"cvss"`
+	Cwe              []string          `json:"cwe" bson:"cwe"`
+	References       []Reference       `json:"refs" bson:"refs"`
+	Affects          []Affect          `json:"affects" bson:"affects"`
 }
 
 // -----------------------------------------------------------------------------

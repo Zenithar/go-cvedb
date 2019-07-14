@@ -21,20 +21,55 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"github.com/blevesearch/bleve"
+	"github.com/blevesearch/bleve/analysis/analyzer/keyword"
 	badger "github.com/dgraph-io/badger"
 	"github.com/imdario/mergo"
 
 	"go.zenithar.org/cvedb/internal/models"
 	"go.zenithar.org/cvedb/internal/repositories"
+	"go.zenithar.org/pkg/db"
 )
 
 type badgerAdvisoryRepository struct {
-	db *badger.DB
+	db    *badger.DB
+	index bleve.Index
 }
 
 // Advisories returns an advisory management repository instance
-func Advisories() repositories.Advisory {
-	return &badgerAdvisoryRepository{}
+func Advisories(db *badger.DB, indexPath string) (repositories.Advisory, error) {
+
+	// Open index
+	index, err := bleve.Open(indexPath)
+	if err == bleve.Error(1) { // ErrorIndexPathDoesNotExist
+		bleve.Config.DefaultKVStore = "leveldb"
+
+		keywordField := bleve.NewTextFieldMapping()
+		keywordField.Analyzer = keyword.Name
+
+		// Declare a document type
+		advisory := bleve.NewDocumentMapping()
+		advisory.AddFieldMappingsAt("@type", keywordField)
+		advisory.AddFieldMappingsAt("id", keywordField)
+		advisory.AddFieldMappingsAt("severity", keywordField)
+		advisory.AddFieldMappingsAt("cve", keywordField)
+
+		// Create a document mapping
+		mapping := bleve.NewIndexMapping()
+		mapping.TypeField = "@type"
+		mapping.AddDocumentMapping(AdvisoryNamespace, advisory)
+
+		// Create an index
+		index, err = bleve.New(indexPath, mapping)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	return &badgerAdvisoryRepository{
+		db:    db,
+		index: index,
+	}, nil
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +92,21 @@ func (r *badgerAdvisoryRepository) Create(_ context.Context, entity *models.Advi
 		entry := badger.NewEntry(r.key(entity.ID), value)
 
 		// Insert in the kv store
-		return txn.SetEntry(entry)
+		if err := txn.SetEntry(entry); err != nil {
+			return err
+		}
+
+		// Prepare indexable document
+		doc := make(map[string]interface{})
+		if err := r.decodeValue(value, &doc); err != nil {
+			return err
+		}
+
+		// Set document type
+		doc["@type"] = AdvisoryNamespace
+
+		// Index document
+		return r.index.Index(entity.ID, doc)
 	})
 }
 
@@ -68,7 +117,9 @@ func (r *badgerAdvisoryRepository) Get(_ context.Context, id string) (*models.Ad
 	if err := r.db.View(func(txn *badger.Txn) error {
 		// Retrieve from KV store
 		item, err := txn.Get(r.key(id))
-		if err != nil {
+		if err == badger.ErrKeyNotFound {
+			return db.ErrNoResult
+		} else if err != nil {
 			return err
 		}
 
@@ -89,8 +140,6 @@ func (r *badgerAdvisoryRepository) Update(_ context.Context, entity *models.Advi
 	if err := entity.Validate(); err != nil {
 		return err
 	}
-
-	// Retrieve from KV store
 
 	// Start transaction
 	return r.db.Update(func(txn *badger.Txn) error {
@@ -124,14 +173,41 @@ func (r *badgerAdvisoryRepository) Update(_ context.Context, entity *models.Advi
 		entry := badger.NewEntry(r.key(entity.ID), value)
 
 		// Insert in the kv store
-		return txn.SetEntry(entry)
+		if err := txn.SetEntry(entry); err != nil {
+			return err
+		}
+
+		// Prepare indexable document
+		doc := make(map[string]interface{})
+		if err := r.decodeValue(value, &doc); err != nil {
+			return err
+		}
+
+		// Set document type
+		doc["@type"] = AdvisoryNamespace
+
+		// Index document
+		return r.index.Index(entity.ID, doc)
+	})
+}
+
+func (r *badgerAdvisoryRepository) Delete(_ context.Context, id string) error {
+	// Read Write transaction
+	return r.db.Update(func(txn *badger.Txn) error {
+		// Delete from KV store
+		if err := txn.Delete(r.key(id)); err != nil {
+			return err
+		}
+
+		// Delete from index
+		return r.index.Delete(id)
 	})
 }
 
 // -----------------------------------------------------------------------------
 
 func (r *badgerAdvisoryRepository) key(id string) []byte {
-	return []byte(fmt.Sprintf("advisory:%s", id))
+	return []byte(fmt.Sprintf("%s:%s", AdvisoryNamespace, id))
 }
 
 func (r *badgerAdvisoryRepository) encodeValue(payload interface{}) ([]byte, error) {
