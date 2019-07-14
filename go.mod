@@ -4,6 +4,8 @@ go 1.12
 
 replace github.com/opencensus-integrations/gomongowrapper => github.com/Zenithar/gomongowrapper v0.0.2
 
+replace go.zenithar.org/pkg/db/adapter/mongodb => ../go-pkg/db/adapter/mongodb
+
 require (
 	github.com/RoaringBitmap/roaring v0.4.18 // indirect
 	github.com/Smerity/govarint v0.0.0-20150407073650-7265e41f48f1 // indirect
@@ -37,6 +39,7 @@ require (
 	github.com/magefile/mage v1.8.0
 	github.com/oklog/run v1.0.0
 	github.com/opencensus-integrations/gomongowrapper v0.0.1
+	github.com/pkg/errors v0.8.1
 	github.com/remyoudompheng/bigfft v0.0.0-20190512091148-babf20351dd7 // indirect
 	github.com/spf13/cobra v0.0.5
 	github.com/spf13/pflag v1.0.3
@@ -44,12 +47,12 @@ require (
 	github.com/stretchr/testify v1.3.0
 	github.com/syndtr/goleveldb v1.0.0 // indirect
 	github.com/tecbot/gorocksdb v0.0.0-20190705090504-162552197222 // indirect
-	go.mongodb.org/mongo-driver v1.0.4
+	go.mongodb.org/mongo-driver v1.0.1-0.20190712184055-9ec4480161a7
 	go.opencensus.io v0.22.0
 	go.uber.org/zap v1.10.0
 	go.zenithar.org/pkg/config v0.0.3
 	go.zenithar.org/pkg/db v0.0.3
-	go.zenithar.org/pkg/db/adapter/mongodb v0.0.6
+	go.zenithar.org/pkg/db/adapter/mongodb v0.0.7
 	go.zenithar.org/pkg/flags v0.0.1
 	go.zenithar.org/pkg/log v0.0.3
 	go.zenithar.org/pkg/platform v0.0.26

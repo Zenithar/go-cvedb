@@ -78,6 +78,13 @@ func (c *advisoryCtrl) search() http.HandlerFunc {
 		}
 
 		// Marshal response
-		respond.With(w, r, http.StatusOK, res)
+		respond.With(w, r, http.StatusOK, &CollectionResponse{
+			Resource: &respond.Resource{
+				Context: "https://go.zenithar.org/cvedb",
+				Type:    "Collection",
+				ID:      r.URL.RequestURI(),
+			},
+			Members: res.Advisories,
+		})
 	}
 }

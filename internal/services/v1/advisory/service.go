@@ -26,7 +26,7 @@ func New(key pagination.Key, advisories repositories.Advisory) v1.Advisories {
 
 // -----------------------------------------------------------------------------
 type cursor struct {
-	Page uint64 `json:"page"`
+	Page uint `json:"page"`
 }
 
 func (s *service) Search(ctx context.Context, req *advisoryv1.SearchRequest) (res *advisoryv1.SearchResponse, err error) {
@@ -61,6 +61,26 @@ func (s *service) Search(ctx context.Context, req *advisoryv1.SearchRequest) (re
 	// If no result back to first page
 	if err != db.ErrNoResult {
 		res.Advisories = FromCollection(entities)
+	}
+
+	// Encode cursor
+	if pagination.HasNext() {
+		nextPage, err := s.key.MarshalToken(&cursor{
+			Page: pagination.NextPage(),
+		})
+		if err != nil {
+			return res, err
+		}
+		res.NextCursor = string(nextPage)
+	}
+	if pagination.HasPrev() {
+		previousPage, err := s.key.MarshalToken(&cursor{
+			Page: pagination.PrevPage(),
+		})
+		if err != nil {
+			return res, err
+		}
+		res.PreviousCursor = string(previousPage)
 	}
 
 	return res, nil
