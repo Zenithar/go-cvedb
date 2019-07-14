@@ -25,6 +25,7 @@ import (
 	"golang.org/x/xerrors"
 
 	"go.zenithar.org/cvedb/cli/cvedb/internal/config"
+	"go.zenithar.org/cvedb/pkg/pagination"
 	"go.zenithar.org/pkg/log"
 )
 
@@ -74,6 +75,17 @@ func (s *application) ApplyConfiguration(cfg interface{}) error {
 
 	// Apply to current component (type assertion done if check)
 	s.cfg, _ = cfg.(*config.Configuration)
+
+	// Check pagination key
+	if s.cfg.Server.PaginationKey == "" {
+		log.Bg().Warn("Pagination key is empty, generating ...")
+		s.cfg.Server.PaginationKey = pagination.Must(pagination.NewKey()).String()
+	} else {
+		_, err := pagination.KeyFromString(s.cfg.Server.PaginationKey)
+		if err != nil {
+			return err
+		}
+	}
 
 	// No error
 	return nil

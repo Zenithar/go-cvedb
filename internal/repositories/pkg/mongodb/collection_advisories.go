@@ -20,20 +20,22 @@ import (
 	"context"
 
 	mongowrapper "github.com/opencensus-integrations/gomongowrapper"
-	db "go.zenithar.org/pkg/db/adapter/mongodb"
+	"go.mongodb.org/mongo-driver/bson"
+	mongodb "go.zenithar.org/pkg/db/adapter/mongodb"
 
 	"go.zenithar.org/cvedb/internal/models"
 	"go.zenithar.org/cvedb/internal/repositories"
+	"go.zenithar.org/pkg/db"
 )
 
 type mgoAdvisoryRepository struct {
-	adapter *db.Default
+	adapter *mongodb.Default
 }
 
 // Advisories returns an advisory management repository instance
-func Advisories(cfg *db.Configuration, session *mongowrapper.WrappedClient) repositories.Advisory {
+func Advisories(cfg *mongodb.Configuration, session *mongowrapper.WrappedClient) repositories.Advisory {
 	return &mgoAdvisoryRepository{
-		adapter: db.NewCRUDTable(session, cfg.DatabaseName, AdvisoryTableName),
+		adapter: mongodb.NewCRUDTable(session, cfg.DatabaseName, AdvisoryTableName),
 	}
 }
 
@@ -48,18 +50,6 @@ func (r *mgoAdvisoryRepository) Create(ctx context.Context, entity *models.Advis
 	return r.adapter.Insert(ctx, entity)
 }
 
-func (r *mgoAdvisoryRepository) Get(ctx context.Context, id string) (*models.Advisory, error) {
-	var entity models.Advisory
-
-	if err := r.adapter.WhereAndFetchOne(ctx, map[string]interface{}{
-		"_id": id,
-	}, &entity); err != nil {
-		return nil, err
-	}
-
-	return &entity, nil
-}
-
 func (r *mgoAdvisoryRepository) Update(ctx context.Context, entity *models.Advisory) error {
 	// Validate entity first
 	if err := entity.Validate(); err != nil {
@@ -72,4 +62,21 @@ func (r *mgoAdvisoryRepository) Update(ctx context.Context, entity *models.Advis
 	}, map[string]interface{}{
 		"id": entity.ID,
 	})
+}
+
+func (r *mgoAdvisoryRepository) Search(ctx context.Context, filter *repositories.AdvisorySearchFilter, pagination *db.Pagination, sortParams *db.SortParameters) ([]*models.Advisory, uint, error) {
+	var results []*models.Advisory
+
+	filterMap := bson.M{}
+
+	// Run the query
+	total, err := r.adapter.Search(ctx, filterMap, sortParams, pagination, &results)
+	if err != nil {
+		return nil, 0, err
+	}
+	if len(results) == 0 {
+		return results, 0, db.ErrNoResult
+	}
+
+	return results, uint(total), nil
 }

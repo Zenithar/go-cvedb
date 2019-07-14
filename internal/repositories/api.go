@@ -20,11 +20,26 @@ import (
 	"context"
 
 	"go.zenithar.org/cvedb/internal/models"
+	"go.zenithar.org/pkg/db"
 )
+
+// AdvisoryAdmin is the contract for advisory management.
+type AdvisoryAdmin interface {
+	Create(ctx context.Context, entity *models.Advisory) error
+	Update(ctx context.Context, entity *models.Advisory) error
+}
+
+// AdvisorySearchFilter is used to create search criteria for Advisory list.
+type AdvisorySearchFilter struct {
+}
+
+// AdvisorySearch is the contract for advisory search and consultation.
+type AdvisorySearch interface {
+	Search(ctx context.Context, filter *AdvisorySearchFilter, pagination *db.Pagination, sortParams *db.SortParameters) ([]*models.Advisory, uint, error)
+}
 
 // Advisory describves advisory management contract
 type Advisory interface {
-	Create(ctx context.Context, entity *models.Advisory) error
-	Get(ctx context.Context, id string) (*models.Advisory, error)
-	Update(ctx context.Context, entity *models.Advisory) error
+	AdvisoryAdmin
+	AdvisorySearch
 }

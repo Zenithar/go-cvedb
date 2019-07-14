@@ -18,9 +18,11 @@ package v1
 
 import (
 	"context"
+
+	advisoryv1 "go.zenithar.org/cvedb/pkg/gen/go/cvedb/advisory/v1"
 )
 
 // Advisories declares advisory service contract
 type Advisories interface {
-	Search(ctx context.Context) (interface{}, error)
+	Search(ctx context.Context, req *advisoryv1.SearchRequest) (res *advisoryv1.SearchResponse, err error)
 }

@@ -36,6 +36,8 @@ type Configuration struct {
 	} `toml:"DB" comment:"###############################\n Database Settings \n##############################"`
 
 	Server struct {
+		PaginationKey string `toml:"paginationKey" default:"" comment:"Pagination encryption key for cursor based pagination"`
+
 		GRPC struct {
 			Network string `toml:"network" default:"tcp" comment:"Network class used for listen (tcp, tcp4, tcp6, unixsocket)"`
 			Listen  string `toml:"listen" default:":5555" comment:"Listen address for gRPC server"`

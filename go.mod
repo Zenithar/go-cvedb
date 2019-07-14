@@ -25,38 +25,38 @@ require (
 	github.com/facebookgo/stack v0.0.0-20160209184415-751773369052 // indirect
 	github.com/facebookgo/subset v0.0.0-20150612182917-8dac2c3c4870 // indirect
 	github.com/fatih/color v1.7.0
+	github.com/fernet/fernet-go v0.0.0-20180830025343-9eac43b88a5e
 	github.com/go-chi/chi v4.0.2+incompatible
+	github.com/gogo/protobuf v1.2.1
+	github.com/golang/protobuf v1.3.2
 	github.com/google/wire v0.3.0
-	github.com/gopherjs/gopherjs v0.0.0-20190411002643-bd77b112433e // indirect
+	github.com/hokaccha/go-prettyjson v0.0.0-20180920040306-f579f869bbfe
 	github.com/imdario/mergo v0.3.7
 	github.com/jmhodges/levigo v1.0.0 // indirect
+	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/magefile/mage v1.8.0
 	github.com/oklog/run v1.0.0
-	github.com/onsi/ginkgo v1.8.0 // indirect
-	github.com/onsi/gomega v1.5.0 // indirect
 	github.com/opencensus-integrations/gomongowrapper v0.0.1
 	github.com/remyoudompheng/bigfft v0.0.0-20190512091148-babf20351dd7 // indirect
-	github.com/smartystreets/assertions v0.0.0-20190401211740-f487f9de1cd3 // indirect
-	github.com/spf13/afero v1.2.1 // indirect
 	github.com/spf13/cobra v0.0.5
+	github.com/spf13/pflag v1.0.3
 	github.com/steveyen/gtreap v0.0.0-20150807155958-0abe01ef9be2 // indirect
 	github.com/stretchr/testify v1.3.0
 	github.com/syndtr/goleveldb v1.0.0 // indirect
 	github.com/tecbot/gorocksdb v0.0.0-20190705090504-162552197222 // indirect
+	go.mongodb.org/mongo-driver v1.0.4
 	go.opencensus.io v0.22.0
 	go.uber.org/zap v1.10.0
 	go.zenithar.org/pkg/config v0.0.3
 	go.zenithar.org/pkg/db v0.0.3
-	go.zenithar.org/pkg/db/adapter/mongodb v0.0.5
+	go.zenithar.org/pkg/db/adapter/mongodb v0.0.6
 	go.zenithar.org/pkg/flags v0.0.1
 	go.zenithar.org/pkg/log v0.0.3
 	go.zenithar.org/pkg/platform v0.0.26
 	go.zenithar.org/pkg/tlsconfig v0.0.1
 	go.zenithar.org/pkg/web v0.0.2
-	golang.org/x/crypto v0.0.0-20190418165655-df01cb2cc480 // indirect
-	golang.org/x/oauth2 v0.0.0-20190402181905-9f3314589c9a // indirect
-	golang.org/x/sync v0.0.0-20190423024810-112230192c58 // indirect
+	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
 	golang.org/x/xerrors v0.0.0-20190513163551-3ee3066db522
-	google.golang.org/appengine v1.5.0 // indirect
+	google.golang.org/grpc v1.22.0
 	gopkg.in/h2non/gock.v1 v1.0.15
 )

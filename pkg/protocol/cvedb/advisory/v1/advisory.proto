@@ -1,0 +1,80 @@
+// Apache 2.0 Licence
+//
+// Copyright 2019 Thibault NORMAND
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package cvedb.advisory.v1;
+
+option (gogoproto.equal_all) = true;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.populate_all) = true;
+option (gogoproto.sizer_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+option csharp_namespace = "Cvedb.Advisory.V1";
+option go_package = "advisoryv1";
+option java_multiple_files = true;
+option java_outer_classname = "AdvisoryProto";
+option java_package = "org.zenithar.cvedb.advisory.v1";
+option objc_class_prefix = "CAX";
+option php_namespace = "Cvedb\\Advisory\\V1";
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+import "google/protobuf/timestamp.proto";
+
+// -----------------------------------------------------------------------------
+
+// Advisory represents a software vulnerability.
+message Advisory {
+  string id = 1;
+  map<string, string> description = 2;
+  double score = 3;
+  google.protobuf.Timestamp published_time = 4;
+  google.protobuf.Timestamp last_modified_time = 5;
+  string cve = 6;
+  CVSS cvss = 7;
+  repeated string cwes = 8;
+  repeated Reference refs = 9;
+  repeated Affect affects = 10;
+}
+
+// CVSS represents advisory score according CVSS version.
+message CVSS {
+  CVSSComponent v2 = 1;
+  CVSSComponent v3 = 2;
+}
+
+// CVSSComponent is an element that stores vector string and score for a given CVSS version.
+message CVSSComponent {
+  string version = 1;
+  string vector = 2;
+  double score = 3;
+}
+
+// Reference is additionnal information for an advisory.
+message Reference {
+  string link = 1;
+  string source = 2;
+  string name = 3;
+  repeated string tags = 4;
+}
+
+// Affect is a element that indicates which vendor/product/version is concerned
+// by the advisory.
+message Affect {
+  string vendor = 1;
+  string product = 2;
+  string version = 3;
+}

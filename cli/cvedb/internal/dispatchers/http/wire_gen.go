@@ -31,13 +31,17 @@ import (
 // Injectors from wire.go:
 
 func setup(ctx context.Context, cfg *config.Configuration) (*http.Server, error) {
+	key, err := core.PaginationKey(cfg)
+	if err != nil {
+		return nil, err
+	}
 	configuration := core.MongoDBConfig(cfg)
 	wrappedClient, err := mongodb.Connection(ctx, configuration)
 	if err != nil {
 		return nil, err
 	}
 	repositoriesAdvisory := mongodb2.Advisories(configuration, wrappedClient)
-	advisories := advisory.New(repositoriesAdvisory)
+	advisories := advisory.New(key, repositoriesAdvisory)
 	server, err := httpServer(ctx, cfg, advisories)
 	if err != nil {
 		return nil, err
