@@ -36,7 +36,7 @@ require (
 	github.com/onsi/gomega v1.5.0 // indirect
 	github.com/opencensus-integrations/gomongowrapper v0.0.1
 	github.com/remyoudompheng/bigfft v0.0.0-20190512091148-babf20351dd7 // indirect
-	github.com/smartystreets/assertions v0.0.0-20190401211740-f487f9de1cd3 // indirect
+	github.com/smartystreets/assertions v1.0.0 // indirect
 	github.com/spf13/afero v1.2.1 // indirect
 	github.com/spf13/cobra v0.0.5
 	github.com/steveyen/gtreap v0.0.0-20150807155958-0abe01ef9be2 // indirect
