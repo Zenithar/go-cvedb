@@ -14,23 +14,21 @@
  * limitations under the License.
  */
 
-package mongodb
+package cmd
 
-import (
-	"github.com/google/wire"
+import "github.com/spf13/cobra"
 
-	db "go.zenithar.org/pkg/db/adapter/mongodb"
-)
+// -----------------------------------------------------------------------------
 
-// ----------------------------------------------------------
+var serverCmd = &cobra.Command{
+	Use:     "server",
+	Aliases: []string{"s"},
+	Short:   "Starts a service dispatcher",
+}
 
-// AdvisoryTableName represents advisory collection name
-var AdvisoryTableName = "advisories"
+// -----------------------------------------------------------------------------
 
-// ----------------------------------------------------------
-
-// RepositorySet exposes Google Wire providers
-var RepositorySet = wire.NewSet(
-	db.Connection,
-	Advisories,
-)
+func init() {
+	serverCmd.AddCommand(httpCmd)
+	// serverCmd.AddCommand(grpcCmd)
+}

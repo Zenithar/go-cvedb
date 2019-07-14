@@ -33,3 +33,9 @@ gin-bin
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+
+bin
+vendor
+tools/bin
+tools/vendor
+go.sum

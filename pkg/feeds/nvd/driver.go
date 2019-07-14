@@ -52,7 +52,10 @@ func Import(ctx context.Context, advisories repositories.Advisory) error {
 				return err
 			}
 
-			advisories.Create(ctx, adv)
+			if err := advisories.Create(ctx, adv); err != nil {
+				return err
+			}
+
 			bar.Increment()
 		}
 

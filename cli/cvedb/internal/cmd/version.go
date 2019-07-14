@@ -14,23 +14,31 @@
  * limitations under the License.
  */
 
-package mongodb
+package cmd
 
 import (
-	"github.com/google/wire"
+	"fmt"
 
-	db "go.zenithar.org/pkg/db/adapter/mongodb"
+	"github.com/spf13/cobra"
+	"go.zenithar.org/cvedb/internal/version"
 )
 
-// ----------------------------------------------------------
+// -----------------------------------------------------------------------------
 
-// AdvisoryTableName represents advisory collection name
-var AdvisoryTableName = "advisories"
+var displayAsJSON bool
 
-// ----------------------------------------------------------
+var versionCmd = &cobra.Command{
+	Use:   "version",
+	Short: "Display service version",
+	Run: func(cmd *cobra.Command, args []string) {
+		if displayAsJSON {
+			fmt.Printf("%s", version.JSON())
+		} else {
+			fmt.Printf("%s", version.Full())
+		}
+	},
+}
 
-// RepositorySet exposes Google Wire providers
-var RepositorySet = wire.NewSet(
-	db.Connection,
-	Advisories,
-)
+func init() {
+	versionCmd.Flags().BoolVar(&displayAsJSON, "json", false, "Display build info as json")
+}

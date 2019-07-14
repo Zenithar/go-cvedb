@@ -14,23 +14,30 @@
  * limitations under the License.
  */
 
-package mongodb
+package main
 
 import (
-	"github.com/google/wire"
+	"math/rand"
+	"time"
 
-	db "go.zenithar.org/pkg/db/adapter/mongodb"
+	"go.zenithar.org/cvedb/cli/cvedb/internal/cmd"
+	"go.zenithar.org/pkg/log"
 )
 
-// ----------------------------------------------------------
+// -----------------------------------------------------------------------------
 
-// AdvisoryTableName represents advisory collection name
-var AdvisoryTableName = "advisories"
+func init() {
+	// Set time locale
+	time.Local = time.UTC
 
-// ----------------------------------------------------------
+	// Initialize random seed
+	rand.Seed(time.Now().UTC().Unix())
+}
 
-// RepositorySet exposes Google Wire providers
-var RepositorySet = wire.NewSet(
-	db.Connection,
-	Advisories,
-)
+// -----------------------------------------------------------------------------
+
+func main() {
+	if err := cmd.Execute(); err != nil {
+		log.CheckErr("Unable to complete command execution", err)
+	}
+}

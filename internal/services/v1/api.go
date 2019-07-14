@@ -14,23 +14,13 @@
  * limitations under the License.
  */
 
-package mongodb
+package v1
 
 import (
-	"github.com/google/wire"
-
-	db "go.zenithar.org/pkg/db/adapter/mongodb"
+	"context"
 )
 
-// ----------------------------------------------------------
-
-// AdvisoryTableName represents advisory collection name
-var AdvisoryTableName = "advisories"
-
-// ----------------------------------------------------------
-
-// RepositorySet exposes Google Wire providers
-var RepositorySet = wire.NewSet(
-	db.Connection,
-	Advisories,
-)
+// Advisories declares advisory service contract
+type Advisories interface {
+	Search(ctx context.Context) (interface{}, error)
+}

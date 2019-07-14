@@ -1,0 +1,18 @@
+---
+blacklist:
+  - GPL-2.0
+
+whitelist:
+  - Apache-2.0
+  - BSD
+  - FreeBSD
+  - CC
+  - ISC
+  - MIT
+  - MPL-2.0
+  - NewBSD
+
+exceptions:
+  - github.com/dchest/uniuri
+  - github.com/AndreasBriese/bbloom
+  - github.com/certifi/gocertifi

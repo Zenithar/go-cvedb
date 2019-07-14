@@ -1,3 +1,5 @@
+// +build badger full
+
 /*
  * Copyright 2019 Thibault NORMAND
  *
@@ -38,7 +40,6 @@ type badgerAdvisoryRepository struct {
 
 // Advisories returns an advisory management repository instance
 func Advisories(db *badger.DB, indexPath string) (repositories.Advisory, error) {
-
 	// Open index
 	index, err := bleve.Open(indexPath)
 	if err == bleve.Error(1) { // ErrorIndexPathDoesNotExist

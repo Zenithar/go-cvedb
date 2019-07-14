@@ -1,3 +1,5 @@
+// +build badger full
+
 /*
  * Copyright 2019 Thibault NORMAND
  *
@@ -16,7 +18,5 @@
 
 package badger
 
-var (
-	// AdvisoryNamespace declares advisory prefix for K/V store
-	AdvisoryNamespace = "advisory"
-)
+// AdvisoryNamespace declares advisory prefix for K/V store
+var AdvisoryNamespace = "advisory"
