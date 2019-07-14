@@ -27,7 +27,7 @@ require (
 	github.com/fatih/color v1.7.0
 	github.com/go-chi/chi v4.0.2+incompatible
 	github.com/google/wire v0.3.0
-	github.com/gopherjs/gopherjs v0.0.0-20190411002643-bd77b112433e // indirect
+	github.com/gopherjs/gopherjs v0.0.0-20190714163845-3e4dfb77656c // indirect
 	github.com/imdario/mergo v0.3.7
 	github.com/jmhodges/levigo v1.0.0 // indirect
 	github.com/magefile/mage v1.8.0
@@ -37,7 +37,7 @@ require (
 	github.com/opencensus-integrations/gomongowrapper v0.0.1
 	github.com/remyoudompheng/bigfft v0.0.0-20190512091148-babf20351dd7 // indirect
 	github.com/smartystreets/assertions v0.0.0-20190401211740-f487f9de1cd3 // indirect
-	github.com/spf13/afero v1.2.1 // indirect
+	github.com/spf13/afero v1.2.2 // indirect
 	github.com/spf13/cobra v0.0.5
 	github.com/steveyen/gtreap v0.0.0-20150807155958-0abe01ef9be2 // indirect
 	github.com/stretchr/testify v1.3.0
@@ -53,10 +53,10 @@ require (
 	go.zenithar.org/pkg/platform v0.0.26
 	go.zenithar.org/pkg/tlsconfig v0.0.1
 	go.zenithar.org/pkg/web v0.0.2
-	golang.org/x/crypto v0.0.0-20190418165655-df01cb2cc480 // indirect
-	golang.org/x/oauth2 v0.0.0-20190402181905-9f3314589c9a // indirect
+	golang.org/x/crypto v0.0.0-20190714163845-4def268fd1a4 // indirect
+	golang.org/x/oauth2 v0.0.0-20190714163845-0f29369cfe45 // indirect
 	golang.org/x/sync v0.0.0-20190423024810-112230192c58 // indirect
 	golang.org/x/xerrors v0.0.0-20190513163551-3ee3066db522
-	google.golang.org/appengine v1.5.0 // indirect
+	google.golang.org/appengine v1.6.1 // indirect
 	gopkg.in/h2non/gock.v1 v1.0.15
 )
