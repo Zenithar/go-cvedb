@@ -26,7 +26,6 @@ import (
 // AdvisoryAdmin is the contract for advisory management.
 type AdvisoryAdmin interface {
 	Create(ctx context.Context, entity *models.Advisory) error
-	Update(ctx context.Context, entity *models.Advisory) error
 }
 
 // AdvisorySearchFilter is used to create search criteria for Advisory list.

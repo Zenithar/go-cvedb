@@ -52,7 +52,7 @@ require (
 	go.uber.org/zap v1.10.0
 	go.zenithar.org/pkg/config v0.0.3
 	go.zenithar.org/pkg/db v0.0.3
-	go.zenithar.org/pkg/db/adapter/mongodb v0.0.7
+	go.zenithar.org/pkg/db/adapter/mongodb v0.0.8
 	go.zenithar.org/pkg/flags v0.0.1
 	go.zenithar.org/pkg/log v0.0.3
 	go.zenithar.org/pkg/platform v0.0.26

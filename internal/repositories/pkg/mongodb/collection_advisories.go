@@ -47,21 +47,9 @@ func (r *mgoAdvisoryRepository) Create(ctx context.Context, entity *models.Advis
 		return err
 	}
 
-	return r.adapter.Insert(ctx, entity)
-}
-
-func (r *mgoAdvisoryRepository) Update(ctx context.Context, entity *models.Advisory) error {
-	// Validate entity first
-	if err := entity.Validate(); err != nil {
-		return err
-	}
-
-	return r.adapter.Update(ctx, map[string]interface{}{
-		"description": entity.Description,
-		"score":       entity.Score,
-	}, map[string]interface{}{
-		"id": entity.ID,
-	})
+	return r.adapter.InsertOrUpdate(ctx, bson.M{
+		"_id": entity.ID,
+	}, entity)
 }
 
 func (r *mgoAdvisoryRepository) Search(ctx context.Context, filter *repositories.AdvisorySearchFilter, pagination *db.Pagination, sortParams *db.SortParameters) ([]*models.Advisory, uint, error) {

@@ -23,44 +23,111 @@ import (
 	"time"
 
 	"github.com/cheggaaa/pb/v3"
+	"go.uber.org/zap"
 
 	"go.zenithar.org/cvedb/internal/models"
 	"go.zenithar.org/cvedb/internal/repositories"
+	"go.zenithar.org/pkg/log"
 )
 
+// ImportOptions defines import strategy
+type ImportOptions struct {
+	Since    uint64
+	Modified bool
+	Recent   bool
+}
+
 // Import a feed into the database
-func Import(ctx context.Context, advisories repositories.Advisory) error {
+func Import(ctx context.Context, advisories repositories.Advisory, opts ImportOptions) error {
 	// Retrieve feeds
+	var err error
 
-	for y := uint64(2002); y <= uint64(time.Now().Year()); y++ {
-		fmt.Printf("Processing %d ...\n", y)
+	if opts.Since >= 2002 {
+		log.For(ctx).Info("Processing all year feed", zap.Uint64("since", opts.Since))
 
-		fmt.Println("Downloading ...")
-		// Recent
+		err = importYear(ctx, advisories, opts.Since)
+		if err != nil {
+			return err
+		}
+	}
+	if opts.Modified {
+		log.For(ctx).Info("Processing modified cve")
+
+		err = importModified(ctx, advisories)
+		if err != nil {
+			return err
+		}
+	}
+	if opts.Recent {
+		log.For(ctx).Info("Processing recent cve")
+
+		err = importRecent(ctx, advisories)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func importRecent(ctx context.Context, advisories repositories.Advisory) error {
+	data, _, err := Recent()
+	if err != nil {
+		return err
+	}
+
+	log.For(ctx).Info("Recent advisories to synchronize", zap.Int("count", len(data.CVEItems)))
+
+	return synchronize(ctx, advisories, data)
+}
+
+func importModified(ctx context.Context, advisories repositories.Advisory) error {
+	data, _, err := Modified()
+	if err != nil {
+		return err
+	}
+
+	log.For(ctx).Info("Modified advisories to synchronize", zap.Int("count", len(data.CVEItems)))
+
+	return synchronize(ctx, advisories, data)
+}
+
+func importYear(ctx context.Context, advisories repositories.Advisory, start uint64) error {
+	for y := uint64(start); y <= uint64(time.Now().Year()); y++ {
 		data, _, err := Year(y)
 		if err != nil {
 			return err
 		}
 
-		fmt.Println("Import ...")
-		// Display progress bar
-		bar := pb.Full.Start(len(data.CVEItems))
+		log.For(ctx).Info("Year feed to synchronize", zap.Uint64("year", y), zap.Int("count", len(data.CVEItems)))
 
-		for _, item := range data.CVEItems {
-			adv, err := toModel(item)
-			if err != nil {
-				return err
-			}
+		if err := synchronize(ctx, advisories, data); err != nil {
+			return err
+		}
+	}
 
-			if err := advisories.Create(ctx, adv); err != nil {
-				return err
-			}
+	return nil
+}
 
-			bar.Increment()
+func synchronize(ctx context.Context, advisories repositories.Advisory, data Data) error {
+	// Display progress bar
+	bar := pb.Full.Start(len(data.CVEItems))
+
+	for _, item := range data.CVEItems {
+		adv, err := toModel(item)
+		if err != nil {
+			return err
 		}
 
-		bar.Finish()
+		if err := advisories.Create(ctx, adv); err != nil {
+			log.For(ctx).Error("Unable to synchronize advisory", zap.Error(err), zap.String("id", adv.ID))
+			return err
+		}
+
+		bar.Increment()
 	}
+
+	bar.Finish()
 
 	return nil
 }

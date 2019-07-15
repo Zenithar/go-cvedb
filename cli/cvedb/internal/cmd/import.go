@@ -58,7 +58,11 @@ var importNvdCmd = &cobra.Command{
 		advisories := mongodb.Advisories(cfg, client)
 
 		// Import NVD feeds
-		if err := nvd.Import(ctx, advisories); err != nil {
+		if err := nvd.Import(ctx, advisories, nvd.ImportOptions{
+			Since:    nvdYearFeedStart,
+			Modified: nvdModifiedFeed,
+			Recent:   nvdRecentFeed,
+		}); err != nil {
 			log.For(ctx).Fatal("Unable to import advisories", zap.Error(err))
 		}
 	},
@@ -67,5 +71,5 @@ var importNvdCmd = &cobra.Command{
 func init() {
 	importNvdCmd.Flags().Uint64Var(&nvdYearFeedStart, "since", 0, "Import since year til now")
 	importNvdCmd.Flags().BoolVar(&nvdModifiedFeed, "modified", false, "Import modified feed")
-	importNvdCmd.Flags().BoolVar(&nvdRecentFeed, "recend", false, "Import recent feed")
+	importNvdCmd.Flags().BoolVar(&nvdRecentFeed, "recent", false, "Import recent feed")
 }
