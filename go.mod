@@ -4,8 +4,6 @@ go 1.12
 
 replace github.com/opencensus-integrations/gomongowrapper => github.com/Zenithar/gomongowrapper v0.0.2
 
-replace go.zenithar.org/pkg/db/adapter/mongodb => ../go-pkg/db/adapter/mongodb
-
 require (
 	github.com/RoaringBitmap/roaring v0.4.18 // indirect
 	github.com/Smerity/govarint v0.0.0-20150407073650-7265e41f48f1 // indirect

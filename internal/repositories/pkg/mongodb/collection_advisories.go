@@ -41,14 +41,14 @@ func Advisories(cfg *mongodb.Configuration, session *mongowrapper.WrappedClient)
 
 // -----------------------------------------------------------------------------
 
-func (r *mgoAdvisoryRepository) Create(ctx context.Context, entity *models.Advisory) error {
+func (r *mgoAdvisoryRepository) Synchronize(ctx context.Context, entity *models.Advisory) error {
 	// Validate entity first
 	if err := entity.Validate(); err != nil {
 		return err
 	}
 
 	return r.adapter.InsertOrUpdate(ctx, bson.M{
-		"_id": entity.ID,
+		"cve": entity.Cve,
 	}, entity)
 }
 
@@ -56,6 +56,15 @@ func (r *mgoAdvisoryRepository) Search(ctx context.Context, filter *repositories
 	var results []*models.Advisory
 
 	filterMap := bson.M{}
+
+	// Parse filter
+	if len(filter.Affects) > 0 {
+		orFilter := bson.A{}
+		for _, aff := range filter.Affects {
+			orFilter = append(orFilter, bsonAffect(aff))
+		}
+		filterMap["$or"] = orFilter
+	}
 
 	// Run the query
 	total, err := r.adapter.Search(ctx, filterMap, sortParams, pagination, &results)
@@ -67,4 +76,22 @@ func (r *mgoAdvisoryRepository) Search(ctx context.Context, filter *repositories
 	}
 
 	return results, uint(total), nil
+}
+
+// -----------------------------------------------------------------------------
+
+func bsonAffect(aff *models.Affect) bson.M {
+	q := bson.M{}
+
+	if aff.Vendor != "" && aff.Vendor != "*" {
+		q["affects.vendor"] = aff.Vendor
+	}
+	if aff.Product != "" && aff.Product != "*" {
+		q["affects.product"] = aff.Product
+	}
+	if aff.Version != "" && aff.Version != "*" {
+		q["affects.version"] = aff.Version
+	}
+
+	return q
 }

@@ -18,8 +18,6 @@ package nvd
 
 import (
 	"context"
-	"fmt"
-	"strings"
 	"time"
 
 	"github.com/cheggaaa/pb/v3"
@@ -119,8 +117,8 @@ func synchronize(ctx context.Context, advisories repositories.Advisory, data Dat
 			return err
 		}
 
-		if err := advisories.Create(ctx, adv); err != nil {
-			log.For(ctx).Error("Unable to synchronize advisory", zap.Error(err), zap.String("id", adv.ID))
+		if err := advisories.Synchronize(ctx, adv); err != nil {
+			log.For(ctx).Error("Unable to synchronize advisory", zap.Error(err), zap.String("id", adv.Cve))
 			return err
 		}
 
@@ -206,7 +204,6 @@ func toModel(item CVEItem) (*models.Advisory, error) {
 
 	// Return result
 	return &models.Advisory{
-		ID:               fmt.Sprintf("nvd:%s", strings.ToLower(item.CVE.CVEDataMeta.ID)),
 		Cve:              item.CVE.CVEDataMeta.ID,
 		Score:            score,
 		Description:      descs,

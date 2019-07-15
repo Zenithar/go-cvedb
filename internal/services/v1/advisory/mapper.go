@@ -9,10 +9,9 @@ import (
 // FromEntity converts entity object to service object
 func FromEntity(entity *models.Advisory) *advisoryv1.Advisory {
 	dto := &advisoryv1.Advisory{
-		Id:          entity.ID,
+		Cve:         entity.Cve,
 		Description: entity.Description,
 		Score:       entity.Score,
-		Cve:         entity.Cve,
 		Cwes:        entity.Cwe,
 	}
 

@@ -2,7 +2,9 @@ package advisory
 
 import (
 	"context"
+	"strings"
 
+	"go.zenithar.org/cvedb/internal/models"
 	"go.zenithar.org/cvedb/internal/repositories"
 	v1 "go.zenithar.org/cvedb/internal/services/v1"
 	"go.zenithar.org/cvedb/pkg/pagination"
@@ -48,6 +50,37 @@ func (s *service) Search(ctx context.Context, req *advisoryv1.SearchRequest) (re
 	sortParams := db.SortConverter(req.Sorts)
 	pagination := db.NewPaginator(uint(currentPage.Page), uint(req.Limit))
 	filter := &repositories.AdvisorySearchFilter{}
+
+	// Affectation
+	if len(req.Affects) > 0 {
+		var affects []*models.Affect
+
+		for _, aff := range req.Affects {
+			parts := strings.Split(aff, ":")
+			switch len(parts) {
+			case 3:
+				affects = append(affects, &models.Affect{
+					Vendor:  parts[0],
+					Product: parts[1],
+					Version: parts[2],
+				})
+			case 2:
+				affects = append(affects, &models.Affect{
+					Vendor:  parts[0],
+					Product: parts[1],
+					Version: "*",
+				})
+			case 1:
+				affects = append(affects, &models.Affect{
+					Vendor:  parts[0],
+					Product: "*",
+					Version: "*",
+				})
+			}
+		}
+
+		filter.Affects = affects
+	}
 
 	// Do the search
 	entities, total, err := s.advisories.Search(ctx, filter, pagination, sortParams)

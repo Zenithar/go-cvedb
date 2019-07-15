@@ -46,6 +46,11 @@ message SearchRequest {
   uint64 limit = 1;
   string cursor = 2;
   repeated string sorts = 3;
+  repeated string affects = 4;
+  string min_published_time = 5;
+  string max_published_time = 6;
+  double min_score = 7;
+  double max_score = 8;
 }
 
 message SearchResponse {

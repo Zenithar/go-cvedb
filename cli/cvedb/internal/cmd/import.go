@@ -40,13 +40,17 @@ var importNvdCmd = &cobra.Command{
 	Use:   "import-nvd",
 	Short: "Import NVD feed",
 	Run: func(cmd *cobra.Command, args []string) {
-		ctx := context.Background()
+		ctx, cancel := context.WithCancel(context.Background())
+		defer cancel()
+
+		// Initialize config
+		initConfig()
 
 		// Open mongo connection
 		cfg := &mdb.Configuration{
 			AutoMigrate:      false,
-			ConnectionString: "mongodb://localhost:27017",
-			DatabaseName:     "cvedb",
+			ConnectionString: conf.DB.Hosts,
+			DatabaseName:     conf.DB.Database,
 		}
 
 		client, err := mdb.Connection(ctx, cfg)

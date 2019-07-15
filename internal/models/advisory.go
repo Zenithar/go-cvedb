@@ -22,7 +22,6 @@ import (
 
 // Advisory is the advisory information holder
 type Advisory struct {
-	ID               string            `json:"id" bson:"_id"`
 	Description      map[string]string `json:"description" bson:"description"`
 	Score            float64           `json:"score" bson:"score"`
 	LastModifiedDate time.Time         `json:"lastModifiedDate" bson:"lastModifiedDate"`
