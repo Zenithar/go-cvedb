@@ -55,11 +55,11 @@ func AdvisoryRoutes(advisories v1.Advisories) http.Handler {
 // -----------------------------------------------------------------------------
 
 func (c *advisoryCtrl) search() http.HandlerFunc {
-	// Request type
-	var req advisoryv1.SearchRequest
-
 	// Handler
 	return func(w http.ResponseWriter, r *http.Request) {
+		// Request type
+		var req advisoryv1.SearchRequest
+
 		// Prepare context
 		ctx := r.Context()
 
