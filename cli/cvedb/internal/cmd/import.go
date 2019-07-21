@@ -20,7 +20,6 @@ import (
 	"context"
 
 	"github.com/spf13/cobra"
-	"go.uber.org/zap"
 
 	"go.zenithar.org/cvedb/internal/repositories/pkg/mongodb"
 	"go.zenithar.org/cvedb/pkg/feeds/nvd"
@@ -55,7 +54,7 @@ var importNvdCmd = &cobra.Command{
 
 		client, err := mdb.Connection(ctx, cfg)
 		if err != nil {
-			log.For(ctx).Fatal("Unable to connect to database", zap.Error(err))
+			log.For(ctx).Fatal("Unable to connect to database", log.Error(err))
 		}
 
 		// Advisory repository
@@ -67,7 +66,7 @@ var importNvdCmd = &cobra.Command{
 			Modified: nvdModifiedFeed,
 			Recent:   nvdRecentFeed,
 		}); err != nil {
-			log.For(ctx).Fatal("Unable to import advisories", zap.Error(err))
+			log.For(ctx).Fatal("Unable to import advisories", log.Error(err))
 		}
 	},
 }

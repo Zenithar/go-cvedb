@@ -30,7 +30,6 @@ import (
 	"go.opencensus.io/plugin/ochttp"
 	"go.opencensus.io/plugin/ochttp/propagation/b3"
 	"go.opencensus.io/stats/view"
-	"go.uber.org/zap"
 
 	"go.zenithar.org/cvedb/cli/cvedb/internal/config"
 	"go.zenithar.org/cvedb/cli/cvedb/internal/core"
@@ -80,7 +79,7 @@ func httpServer(ctx context.Context, cfg *config.Configuration, advisories v1.Ad
 			ClientAuth: clientAuth,
 		})
 		if err != nil {
-			log.For(ctx).Error("Unable to build TLS configuration from settings", zap.Error(err))
+			log.For(ctx).Error("Unable to build TLS configuration from settings", log.Error(err))
 			return nil, err
 		}
 
@@ -96,7 +95,7 @@ func httpServer(ctx context.Context, cfg *config.Configuration, advisories v1.Ad
 		ochttp.DefaultServerViews...,
 	)
 	if err != nil {
-		log.For(ctx).Fatal("Unable to register stat views", zap.Error(err))
+		log.For(ctx).Fatal("Unable to register stat views", log.Error(err))
 	}
 
 	// Return result

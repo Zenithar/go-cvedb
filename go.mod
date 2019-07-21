@@ -13,7 +13,7 @@ require (
 	github.com/blevesearch/segment v0.0.0-20160915185041-762005e7a34f // indirect
 	github.com/boltdb/bolt v1.3.1 // indirect
 	github.com/cheggaaa/pb/v3 v3.0.1
-	github.com/cloudflare/tableflip v0.0.0-20190521150731-8ccd7b4aff9e
+	github.com/cloudflare/tableflip v1.0.0
 	github.com/common-nighthawk/go-figure v0.0.0-20190529165535-67e0ed34491a
 	github.com/couchbase/vellum v0.0.0-20190626091642-41f2deade2cf // indirect
 	github.com/cznic/b v0.0.0-20181122101859-a26611c4d92d // indirect
@@ -47,17 +47,16 @@ require (
 	github.com/tecbot/gorocksdb v0.0.0-20190705090504-162552197222 // indirect
 	go.mongodb.org/mongo-driver v1.0.1-0.20190712184055-9ec4480161a7
 	go.opencensus.io v0.22.0
-	go.uber.org/zap v1.10.0
-	go.zenithar.org/pkg/config v0.0.3
+	go.zenithar.org/pkg/config v0.0.5
 	go.zenithar.org/pkg/db v0.0.3
-	go.zenithar.org/pkg/db/adapter/mongodb v0.0.8
-	go.zenithar.org/pkg/flags v0.0.1
-	go.zenithar.org/pkg/log v0.0.3
-	go.zenithar.org/pkg/platform v0.0.26
+	go.zenithar.org/pkg/db/adapter/mongodb v0.0.10
+	go.zenithar.org/pkg/flags v0.0.2
+	go.zenithar.org/pkg/log v0.1.1
+	go.zenithar.org/pkg/platform v0.1.1
 	go.zenithar.org/pkg/tlsconfig v0.0.1
 	go.zenithar.org/pkg/web v0.0.2
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
-	golang.org/x/xerrors v0.0.0-20190513163551-3ee3066db522
+	golang.org/x/xerrors v0.0.0-20190717185122-a985d3407aa7
 	google.golang.org/grpc v1.22.0
 	gopkg.in/h2non/gock.v1 v1.0.15
 )

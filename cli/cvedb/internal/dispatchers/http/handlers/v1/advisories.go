@@ -20,7 +20,6 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi"
-	"go.uber.org/zap"
 
 	v1 "go.zenithar.org/cvedb/internal/services/v1"
 	advisoryv1 "go.zenithar.org/cvedb/pkg/gen/go/cvedb/advisory/v1"
@@ -72,7 +71,7 @@ func (c *advisoryCtrl) search() http.HandlerFunc {
 		// Do the call
 		res, err := c.advisories.Search(ctx, &req)
 		if err != nil {
-			log.For(ctx).Error("Unable to query database", zap.Error(err))
+			log.For(ctx).Error("Unable to query database", log.Error(err))
 			respond.WithError(w, r, http.StatusInternalServerError, "Unable to query advisory database")
 			return
 		}

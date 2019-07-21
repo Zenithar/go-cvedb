@@ -22,7 +22,6 @@ import (
 	"github.com/cloudflare/tableflip"
 	"github.com/oklog/run"
 	"github.com/spf13/cobra"
-	"go.uber.org/zap"
 
 	"go.zenithar.org/cvedb/cli/cvedb/internal/dispatchers/http"
 	"go.zenithar.org/cvedb/internal/version"
@@ -46,7 +45,7 @@ var httpCmd = &cobra.Command{
 		log.For(ctx).Info("Starting cvedb HTTP server ...")
 
 		// Start goroutine group
-		err := platform.Run(ctx, &platform.Application{
+		err := platform.Serve(ctx, &platform.Server{
 			Debug:           conf.Debug.Enable,
 			Name:            "cvedb-http",
 			Version:         version.Version,
@@ -55,17 +54,17 @@ var httpCmd = &cobra.Command{
 			Builder: func(upg *tableflip.Upgrader, group *run.Group) {
 				ln, err := upg.Fds.Listen(conf.Server.HTTP.Network, conf.Server.HTTP.Listen)
 				if err != nil {
-					log.For(ctx).Fatal("Unable to start HTTP server", zap.Error(err))
+					log.For(ctx).Fatal("Unable to start HTTP server", log.Error(err))
 				}
 
 				server, err := http.New(ctx, conf)
 				if err != nil {
-					log.For(ctx).Fatal("Unable to start HTTP server", zap.Error(err))
+					log.For(ctx).Fatal("Unable to start HTTP server", log.Error(err))
 				}
 
 				group.Add(
 					func() error {
-						log.For(ctx).Info("Starting HTTP server", zap.Stringer("address", ln.Addr()))
+						log.For(ctx).Info("Starting HTTP server", log.String("address", ln.Addr().String()))
 						return server.Serve(ln)
 					},
 					func(e error) {

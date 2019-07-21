@@ -20,7 +20,6 @@ import (
 	iconfig "go.zenithar.org/cvedb/cli/cvedb/internal/config"
 
 	"github.com/spf13/cobra"
-	"go.uber.org/zap"
 	"go.zenithar.org/pkg/config"
 	cmdcfg "go.zenithar.org/pkg/config/cmd"
 	"go.zenithar.org/pkg/flags/feature"
@@ -62,6 +61,6 @@ var (
 
 func initConfig() {
 	if err := config.Load(conf, "CVDB", cfgFile); err != nil {
-		log.Bg().Fatal("Unable load config", zap.Error(err))
+		log.Bg().Fatal("Unable load config", log.Error(err))
 	}
 }

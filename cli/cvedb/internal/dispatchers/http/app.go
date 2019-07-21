@@ -21,7 +21,6 @@ import (
 	"net/http"
 	"sync"
 
-	"go.uber.org/zap"
 	"golang.org/x/xerrors"
 
 	"go.zenithar.org/cvedb/cli/cvedb/internal/config"
@@ -51,7 +50,7 @@ func New(ctx context.Context, cfg *config.Configuration) (*http.Server, error) {
 
 		// Apply configuration
 		if err := app.ApplyConfiguration(cfg); err != nil {
-			log.For(ctx).Fatal("Unable to initialize server settings", zap.Error(err))
+			log.For(ctx).Fatal("Unable to initialize server settings", log.Error(err))
 		}
 	})
 

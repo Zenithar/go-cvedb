@@ -21,7 +21,6 @@ import (
 	"time"
 
 	"github.com/cheggaaa/pb/v3"
-	"go.uber.org/zap"
 
 	"go.zenithar.org/cvedb/internal/models"
 	"go.zenithar.org/cvedb/internal/repositories"
@@ -41,7 +40,7 @@ func Import(ctx context.Context, advisories repositories.Advisory, opts ImportOp
 	var err error
 
 	if opts.Since >= 2002 {
-		log.For(ctx).Info("Processing all year feed", zap.Uint64("since", opts.Since))
+		log.For(ctx).Info("Processing all year feed")
 
 		err = importYear(ctx, advisories, opts.Since)
 		if err != nil {
@@ -74,7 +73,7 @@ func importRecent(ctx context.Context, advisories repositories.Advisory) error {
 		return err
 	}
 
-	log.For(ctx).Info("Recent advisories to synchronize", zap.Int("count", len(data.CVEItems)))
+	log.For(ctx).Info("Recent advisories to synchronize")
 
 	return synchronize(ctx, advisories, data)
 }
@@ -85,7 +84,7 @@ func importModified(ctx context.Context, advisories repositories.Advisory) error
 		return err
 	}
 
-	log.For(ctx).Info("Modified advisories to synchronize", zap.Int("count", len(data.CVEItems)))
+	log.For(ctx).Info("Modified advisories to synchronize")
 
 	return synchronize(ctx, advisories, data)
 }
@@ -97,7 +96,7 @@ func importYear(ctx context.Context, advisories repositories.Advisory, start uin
 			return err
 		}
 
-		log.For(ctx).Info("Year feed to synchronize", zap.Uint64("year", y), zap.Int("count", len(data.CVEItems)))
+		log.For(ctx).Info("Year feed to synchronize")
 
 		if err := synchronize(ctx, advisories, data); err != nil {
 			return err
@@ -118,7 +117,7 @@ func synchronize(ctx context.Context, advisories repositories.Advisory, data Dat
 		}
 
 		if err := advisories.Synchronize(ctx, adv); err != nil {
-			log.For(ctx).Error("Unable to synchronize advisory", zap.Error(err), zap.String("id", adv.Cve))
+			log.For(ctx).Error("Unable to synchronize advisory", log.Error(err), log.String("id", adv.Cve))
 			return err
 		}
 
