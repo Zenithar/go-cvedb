@@ -226,8 +226,6 @@ github.com/mattn/go-runewidth v0.0.4 h1:2BvfKmzob6Bmd4YsL0zygOqfdFnK7GR4QL06Do4/
 github.com/mattn/go-runewidth v0.0.4/go.mod h1:LwmH8dsx7+W8Uxz3IHJYH5QSwggIsqBzpuz5H//U1FU=
 github.com/matttproud/golang_protobuf_extensions v1.0.1 h1:4hp9jkHxhMHkqkrB3Ix0jegS5sx/RkqARlsWZ6pIwiU=
 github.com/matttproud/golang_protobuf_extensions v1.0.1/go.mod h1:D8He9yQNgCq6Z5Ld7szi9bcBfOoFv/3dc6xSMkL2PC0=
-github.com/mcuadros/go-defaults v1.1.0 h1:K0LgSNfsSUrbEHR7HgfZpOHVWYsPnYh/dKTA7pGeZ/I=
-github.com/mcuadros/go-defaults v1.1.0/go.mod h1:vl9cJiNIIHISQeboDhZBUCiCOa3GkeioLe3Y95NXF6Y=
 github.com/mcuadros/go-defaults v1.1.1-0.20161116231230-e1c978be3307 h1:mzT3qP02ssj2AnGaGmvbDHGdRn5kLSgOhLNJ6GBrFR0=
 github.com/mcuadros/go-defaults v1.1.1-0.20161116231230-e1c978be3307/go.mod h1:vl9cJiNIIHISQeboDhZBUCiCOa3GkeioLe3Y95NXF6Y=
 github.com/mitchellh/go-homedir v1.1.0 h1:lukF9ziXFxDFPkA1vsr5zpc1XuPDn/wFntq5mG+4E0Y=
@@ -356,16 +354,10 @@ go.uber.org/multierr v1.1.0/go.mod h1:wR5kodmAFQ0UK8QlbwjlSNy0Z68gJhDJUG5sjR94q/
 go.uber.org/zap v1.9.1/go.mod h1:vwi/ZaCAaUcBkycHslxD9B2zi4UTXhF60s6SWpuDF0Q=
 go.uber.org/zap v1.10.0 h1:ORx85nbTijNz8ljznvCMR1ZBIPKFn3jQrag10X2AsuM=
 go.uber.org/zap v1.10.0/go.mod h1:vwi/ZaCAaUcBkycHslxD9B2zi4UTXhF60s6SWpuDF0Q=
-go.zenithar.org/pkg/config v0.0.3 h1:Lfhdj6poe1noxBdE8tXvYMElbLU5NLjQd/I5Tfe4l5w=
-go.zenithar.org/pkg/config v0.0.3/go.mod h1:5eQsdi/pGMXENPYhmRhzWC9emiyz8n8uSpI0Qci4GrM=
-go.zenithar.org/pkg/config v0.0.4 h1:ZENc5hp+Cp6+DeYdAvsT39/L9Cti/uemzU8cbhP0Q6s=
-go.zenithar.org/pkg/config v0.0.4/go.mod h1:+jsLn+SvKmBWozTs48hXVabPskFeoJTlvQ86MF8pGgY=
 go.zenithar.org/pkg/config v0.0.5 h1:6BB/zhkZl+yCgvL103xC4RS2d3N4gP3txfQhW9BGhqw=
 go.zenithar.org/pkg/config v0.0.5/go.mod h1:nL6pfYltcmZIahDyd17zebWh5S8uzrFE4J2NtrpCD0w=
 go.zenithar.org/pkg/db v0.0.3 h1:bCnL1att4wiMc/qjARPM1pr2uwIre70rw35QqI5P7w0=
 go.zenithar.org/pkg/db v0.0.3/go.mod h1:B/k9Lz+RqfORR3QpSu9hqmBFnzD3N0LjT3UYVeEyahQ=
-go.zenithar.org/pkg/db/adapter/mongodb v0.0.9 h1:GYbI5r1jBfnwcjtfRDjJm/JkDdcLw3qO29uGh4mLZco=
-go.zenithar.org/pkg/db/adapter/mongodb v0.0.9/go.mod h1:Hb/VAhxt64YDV2tD5R2KxtvsUJ65r2kjiiLwcbXa/zw=
 go.zenithar.org/pkg/db/adapter/mongodb v0.0.10 h1:LzxbPoi5Kn1PY0e8OZUoovSNvk2R5D9LTgKx8UhslhE=
 go.zenithar.org/pkg/db/adapter/mongodb v0.0.10/go.mod h1:Hb/VAhxt64YDV2tD5R2KxtvsUJ65r2kjiiLwcbXa/zw=
 go.zenithar.org/pkg/flags v0.0.1 h1:LrPtQ5jPTU8EpD7AgVZ9Abyhda0n7FFzEKnCtTONiL0=
@@ -373,10 +365,10 @@ go.zenithar.org/pkg/flags v0.0.1/go.mod h1:4fYZH9shZyuK0mYqjAa5iW7zinXanEG8QNraM
 go.zenithar.org/pkg/flags v0.0.2 h1:pyOoMlqzRhBPoX/p68JoGx8Y2PiC5yCzkl/SU5afBf8=
 go.zenithar.org/pkg/flags v0.0.2/go.mod h1:7Zx6dYGpM1jmG339HinnwSCmKWqeJzBRCbgREKEJl8E=
 go.zenithar.org/pkg/log v0.0.2/go.mod h1:r1MdaonP73t7JfOAEgWnIJopogpIcZpivREt1I+eh48=
-go.zenithar.org/pkg/log v0.0.3 h1:pvVasWV54TCL6b2ybl9lHWbEeB8n/VI3jLMqoI9hT3k=
-go.zenithar.org/pkg/log v0.0.3/go.mod h1:NgJqFcXTrLM+stRO0M7OH8WSJ83VJgq5gc8FrjOnVfE=
 go.zenithar.org/pkg/log v0.1.1 h1:6xMifcftipQd+kSsI7ZehV6iSf9Lq7r7CqIt0TCsmqY=
 go.zenithar.org/pkg/log v0.1.1/go.mod h1:tJhBj52BxUp9nqR9KIihMlyTCf/IZGVIe91R+yOCCE8=
+go.zenithar.org/pkg/log v0.1.2 h1:q4G599ld+iv7RupUOXlWisZNN6yQO+H6GOoiUGOalqw=
+go.zenithar.org/pkg/log v0.1.2/go.mod h1:tJhBj52BxUp9nqR9KIihMlyTCf/IZGVIe91R+yOCCE8=
 go.zenithar.org/pkg/log/zap v0.0.2 h1:7xPAPdke+raqXbkzXPF2qkzRQEGD2eGVeyx12eX/fMY=
 go.zenithar.org/pkg/log/zap v0.0.2/go.mod h1:XdhiiPvkitvJXBg6lQ++x0eJEY8gYZG25cD9KEJxXr8=
 go.zenithar.org/pkg/platform v0.1.1 h1:xOXi8cwTJdONIvQpeSw5PYwQlMzb/DeUcaL5rHeolIc=
@@ -495,6 +487,4 @@ honnef.co/go/tools v0.0.0-20180728063816-88497007e858/go.mod h1:rf3lG4BRIbNafJWh
 honnef.co/go/tools v0.0.0-20190102054323-c2f93a96b099/go.mod h1:rf3lG4BRIbNafJWhAfAdb/ePZxsR/4RtNHQocxwk9r4=
 honnef.co/go/tools v0.0.0-20190106161140-3f1c8253044a/go.mod h1:rf3lG4BRIbNafJWhAfAdb/ePZxsR/4RtNHQocxwk9r4=
 honnef.co/go/tools v0.0.0-20190523083050-ea95bdfd59fc/go.mod h1:rf3lG4BRIbNafJWhAfAdb/ePZxsR/4RtNHQocxwk9r4=
-launchpad.net/gocheck v0.0.0-20140225173054-000000000087 h1:Izowp2XBH6Ya6rv+hqbceQyw/gSGoXfH/UPoTGduL54=
-launchpad.net/gocheck v0.0.0-20140225173054-000000000087/go.mod h1:hj7XX3B/0A+80Vse0e+BUHsHMTEhd0O4cpUHr/e/BUM=
 rsc.io/goversion v1.0.0/go.mod h1:Eih9y/uIBS3ulggl7KNJ09xGSLcuNaLgmvvqa07sgfo=

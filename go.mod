@@ -51,7 +51,7 @@ require (
 	go.zenithar.org/pkg/db v0.0.3
 	go.zenithar.org/pkg/db/adapter/mongodb v0.0.10
 	go.zenithar.org/pkg/flags v0.0.2
-	go.zenithar.org/pkg/log v0.1.1
+	go.zenithar.org/pkg/log v0.1.2
 	go.zenithar.org/pkg/platform v0.1.1
 	go.zenithar.org/pkg/tlsconfig v0.0.1
 	go.zenithar.org/pkg/web v0.0.2
